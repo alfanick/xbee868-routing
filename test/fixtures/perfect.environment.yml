@@ -6,7 +6,7 @@ start:
     all:
       delay:
         distribution: constant
-        value: 500
+        value: 20
       retries:
         distribution: constant
         value: 0
