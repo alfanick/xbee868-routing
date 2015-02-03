@@ -82,6 +82,8 @@ namespace PUT {
        * edge connecting two nodes may exist in network.
        */
       class Network {
+       friend class Router;
+
        private:
         //! Logical address to Node map
         std::map< Address, Node* > nodes;

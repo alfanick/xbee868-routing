@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <map>
 #include <memory>
+#include <chrono>
 
 #include "packet.h"
 
@@ -34,11 +35,14 @@ namespace PUT {
         //! True if node is self
         bool self;
 
+        std::chrono::steady_clock::time_point last_tick;
 
         /**
          * Create empty node
          */
-        Node() : mac(0), name("[EMPTY]"), address(0), network(0), self(false) { };
+        Node() : mac(0), name("[EMPTY]"), address(0), network(0), self(false) {
+          last_tick = std::chrono::steady_clock::now();
+        };
 
 
         /**
@@ -49,7 +53,9 @@ namespace PUT {
          * @param n Name
          * @param a Logical address
          */
-        Node(uint64_t m,  uint16_t nt, std::string n, Address a) : mac(m), name(n), address(a), network(nt), self(false) { };
+        Node(uint64_t m,  uint16_t nt, std::string n, Address a) : mac(m), name(n), address(a), network(nt), self(false) {
+          last_tick = std::chrono::steady_clock::now();
+        };
 
         //! Destroy node
         ~Node();

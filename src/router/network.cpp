@@ -234,10 +234,10 @@ namespace PUT {
         auto it_a = neighbours.find(a);
 
         if (it_a != neighbours.end()) {
-          dirty = true;
           auto it_ab = it_a->second.find(b);
 
           if (it_ab != it_a->second.end()) {
+            dirty = true;
             delete it_ab->second;
             it_a->second.erase(it_ab);
           }
@@ -246,10 +246,10 @@ namespace PUT {
         auto it_b = neighbours.find(b);
 
         if (it_b != neighbours.end()) {
-          dirty = true;
           auto it_ba = it_b->second.find(a);
 
           if (it_ba != it_b->second.end()) {
+            dirty = true;
             it_b->second.erase(it_ba);
           }
         }

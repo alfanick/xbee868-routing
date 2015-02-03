@@ -163,6 +163,8 @@ namespace PUT {
          */
         std::thread nodeBroadcaster;
 
+        std::thread heartbeatDetector;
+
         /**
          * Node broadcaster status.
          *

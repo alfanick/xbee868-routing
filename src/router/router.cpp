@@ -71,6 +71,34 @@ namespace PUT {
           }
         });
 
+        heartbeatDetector = std::thread([this]() {
+          THREAD_NAME("HeartbeatDetector");
+
+          while (true) {
+            auto last = std::chrono::steady_clock::now() - std::chrono::seconds(20);
+            auto adjacent = network.neighbours.find(self->address);
+            std::vector<Address> broken;
+
+            if (adjacent != network.neighbours.end())
+              for (auto& neighbour : adjacent->second)
+                if (network.node(neighbour.first)->last_tick < last)
+                  broken.push_back(neighbour.first);
+
+            for (Address broken_node : broken) {
+              network.drop(self->address, broken_node);
+
+              Packet* p = new Packet(Packet::Type::EdgeDrop);
+              p->data.edge[0] = self->address;
+              p->data.edge[1] = broken_node;
+
+              dispatcher.broadcast(p);
+              delete p;
+            }
+
+            std::this_thread::sleep_for(std::chrono::seconds(3));
+          }
+        });
+
       }
 
       Router::~Router() {
@@ -146,7 +174,6 @@ namespace PUT {
             break;
 
           case Packet::Type::NodeBroadcast:
-
             // add node if not adjacent
             if (network.node(packet->data.address)->mac == 0) {
               heartbeat();
@@ -162,6 +189,8 @@ namespace PUT {
 
               delete response;
             }
+
+            network.node(packet->data.address)->last_tick = std::chrono::steady_clock::now();
 
             delete packet;
 
