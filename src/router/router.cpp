@@ -197,7 +197,7 @@ namespace PUT {
             break;
 
           case Packet::Type::EdgeDrop:
-            if (network.drop(packet->data.edge[0], packet->data.edge[1])) {
+            if (network.drop(packet->data.edge[0], packet->data.edge[1]) || network.drop(packet->data.edge[1], packet->data.edge[0])) {
               DLOG(INFO) << "Edge " << packet->data.edge[0] << "->" << packet->data.edge[1] << "dropped at node: " << self->address;
               DLOG(INFO) << "Broadcasting EdgeDrop from " << self->address << " for edge " << packet->data.edge[0] << "->" << packet->data.edge[1];
               dispatcher.broadcast(packet);
