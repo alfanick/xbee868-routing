@@ -1,0 +1,17 @@
+*.po
+*.o
+*.so
+*.dylib
+
+debug.txt
+
+Makefile
+
+bin
+build
+logs
+docs
+ext
+
+.todo.commit_msg
+

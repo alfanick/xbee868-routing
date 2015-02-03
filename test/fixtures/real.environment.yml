@@ -1,0 +1,23 @@
+start:
+  delay: 0
+  # point: 0
+
+  edges:
+    all:
+      delay:
+        distribution: uniform
+        included: 5
+        excluded: 50
+      retries:
+        distribution: uniform
+        included: 0
+        excluded: 5
+      errors:
+        distribution: constant
+        value: 0
+
+  nodes:
+    all:
+      power:
+        distribution: constant
+        value: 1

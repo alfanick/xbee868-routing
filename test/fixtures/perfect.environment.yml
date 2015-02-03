@@ -1,0 +1,21 @@
+start:
+  delay: 0
+  # point: 0
+
+  edges:
+    all:
+      delay:
+        distribution: constant
+        value: 500
+      retries:
+        distribution: constant
+        value: 0
+      errors:
+        distribution: constant
+        value: 0
+
+  nodes:
+    all:
+      power:
+        distribution: constant
+        value: 1

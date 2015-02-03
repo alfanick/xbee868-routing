@@ -1,0 +1,13 @@
+alfa:
+  - beta
+  - gamma
+beta:
+  - alfa
+  - delta
+gamma:
+  - alfa
+  - delta
+delta:
+  - beta
+  - gamma
+

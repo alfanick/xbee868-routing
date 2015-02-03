@@ -1,0 +1,12 @@
+#!/bin/sh
+
+rm -rf bin
+mkdir -p bin
+ln -s ../src/simulator.rb bin/simulator
+
+mkdir -p logs
+mkdir -p docs
+mkdir -p build
+cd build
+cmake -Wno-dev -DCMAKE_BUILD_TYPE=Debug .. -DCMAKE_INSTALL_PREFIX=..
+cd ..
