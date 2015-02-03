@@ -211,8 +211,12 @@ namespace PUT {
           meta = history.meta(frame);
 
 /////
-          if (!meta) LOG(WARNING) << "handle_internal meta is NULL at begin";
-
+          if (!meta) {
+            LOG(WARNING) << "handle_internal meta is NULL at begin";
+            history.release_id(frame);
+            history.unlock();
+            return;
+          }
           auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - meta->send_time).count();
           LOG(WARNING) << "millis: " << millis;
 
@@ -242,8 +246,6 @@ namespace PUT {
               history.erase(meta->packet);
             }
           } else {
-            if (!meta) LOG(WARNING) << "handle_internal meta is NULL at while adding timeout";
-
             meta->timeout = timeout(meta->packet, meta->path_history.back());
             meta->check_timeout = true;
 
